@@ -7,7 +7,8 @@ const int triggerPin = 13; // HC-SR04 trigger pin
 const int echoPin = 12;    // HC-SR04 echo pin
 const int limitSwitchPin = 14; // Limit switch input pin
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
