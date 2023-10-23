@@ -1,0 +1,20 @@
+# Constants
+WIDTH, HEIGHT = 800, 600
+BACKGROUND_COLOR = (24, 24, 24)
+INFO_BOX_COLOR = (31, 31, 31)
+FONT_COLOR = (255, 255, 255)
+FONT_SIZE = 32
+SMALL_FONT_SIZE = 20
+FONT_NAME = 'Arial'
+GRAPH_BOX_COLOR = (90, 90, 90)
+GRAPH_BOX_WIDTH = 110
+GRAPH_BOX_HEIGHT = 240
+GRAPH_WIDTH = 240
+GRAPH_HEIGHT = 255
+GRAPH_BOX_RADIUS = 15
+GRAPH_BAR_WIDTH = 0.6  # Thinness of the graph bars
+# MQTT Constants
+BROKER_ADDRESS = "your_broker_address"
+DISTANCE_TOPIC = "distance"  # Water sensor data
+LIMIT_SWITCH_TOPIC = "limit_switch"  # Lid status
+SENSOR_DATA_TOPIC = "sensor_data_topic"
