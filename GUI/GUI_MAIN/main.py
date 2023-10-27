@@ -1,7 +1,6 @@
 import pygame
 import sensor_data_display
 from constants import *
-
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Raspberry Pi Sensor Data")

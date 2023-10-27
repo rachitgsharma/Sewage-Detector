@@ -1,50 +1,55 @@
 import paho.mqtt.client as mqtt
 import json
-import time
-import sensor_data_display
-# MQTT broker configuration
-MQTT_BROKER_HOST = "your_mqtt_broker_host"
-MQTT_BROKER_PORT = 1883
-MQTT_TOPIC_DISTANCE = "water_sensor_data"
-MQTT_TOPIC_LIMIT_SWITCH = "lid_status"
+
+# MQTT broker settings
+MQTT_BROKER = "your_broker_address"
+MQTT_PORT = 1883
+MQTT_TOPIC_DISTANCE = "sensor/distance"
+MQTT_TOPIC_LIMIT_SWITCH = "sensor/limit_switch"
+MQTT_TOPIC_SENSOR_DATA = "sensor/data"  # Update this topic based on your requirements
+
+# Callback when the client connects to the MQTT broker
+def on_connect(client, userdata, flags, rc):
+    print(f"Connected with result code {rc}")
+    # Subscribe to the MQTT topics
+    client.subscribe([(MQTT_TOPIC_DISTANCE, 0), (MQTT_TOPIC_LIMIT_SWITCH, 0)])
+
+# Callback when a message is received from the MQTT broker
+def on_message(client, userdata, msg):
+    
+    global sensor_data
+    print(f"Received message on topic '{msg.topic}': {msg.payload.decode('utf-8')}")
+    if msg.topic == MQTT_TOPIC_DISTANCE:
+        distance_data = float(msg.payload)
+        sensor_data["Water Sensor"] = distance_data
+    elif msg.topic == MQTT_TOPIC_LIMIT_SWITCH:
+        limit_switch_data = msg.payload.decode("utf-8")
+        sensor_data["Lid Status"] = limit_switch_data
 
 # Initialize the MQTT client
-client = mqtt.Client("RaspberryPiSensorClient")
-
-# Store values for calculating average water level
-average_water_level_values = []
-
-# Callback function when the client connects to the MQTT broker
-def on_connect(client, userdata, flags, rc):
-    print("Connected to MQTT broker with code " + str(rc))
-    # Subscribe to relevant topics
-    client.subscribe(MQTT_TOPIC_DISTANCE)
-    client.subscribe(MQTT_TOPIC_LIMIT_SWITCH)
-
-# Callback function to handle incoming MQTT messages
-def on_message(client, userdata, message):
-    payload = message.payload.decode("utf-8")
-    sensor_data = json.loads(payload)
-    average_water_level_values.append(sensor_data["Water Sensor"])
-    average_water_level = sum(average_water_level_values) / len(average_water_level_values)
-    sensor_data["Average Water Level"] = round(average_water_level, 2)
-    
-    # Pass the sensor data to the display function
-    sensor_data_display.sensor_data_screen(sensor_data)
-
-# Set the callbacks
+client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
 # Connect to the MQTT broker
-client.connect(MQTT_BROKER_HOST, MQTT_BROKER_PORT, 60)
+client.connect(MQTT_BROKER, MQTT_PORT, 60)
+
+# Sensor data dictionary
+sensor_data = {
+    "Node Status": "Active",  # Assuming it's always "Active"
+    "Lid Status": "Active",   # Assuming it's always "Active"
+    "Date and Time": "",     # To be updated based on your requirements
+    "Quick Alerts": "No alerts at the moment",
+    "Water Sensor": 0.0,     # Initial value, to be updated by MQTT
+}
 
 # Start the MQTT client loop
 client.loop_start()
 
+# Keep the script running
 try:
     while True:
         pass
 except KeyboardInterrupt:
-    print("Disconnected from MQTT broker")
+    print("Disconnected")
     client.disconnect()

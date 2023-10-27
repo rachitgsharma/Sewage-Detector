@@ -14,7 +14,8 @@ GRAPH_HEIGHT = 255
 GRAPH_BOX_RADIUS = 15
 GRAPH_BAR_WIDTH = 0.6  # Thinness of the graph bars
 # MQTT Constants
-BROKER_ADDRESS = "your_broker_address"
-DISTANCE_TOPIC = "distance"  # Water sensor data
-LIMIT_SWITCH_TOPIC = "limit_switch"  # Lid status
-SENSOR_DATA_TOPIC = "sensor_data_topic"
+MQTT_BROKER = "192.168.212.135"  # Replace with your MQTT broker address
+MQTT_PORT = 1883
+MQTT_TOPIC_DISTANCE = "sensor/distance"
+MQTT_TOPIC_LIMIT_SWITCH = "sensor/limit_switch"
+WATER_LEVEL_VALUE_COUNT = 10  # Adjust the count as needed
