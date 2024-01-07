@@ -14,7 +14,7 @@ GRAPH_HEIGHT = 255
 GRAPH_BOX_RADIUS = 15
 GRAPH_BAR_WIDTH = 0.6  # Thinness of the graph bars
 # MQTT Constants
-MQTT_BROKER = "192.168.212.135"  # Replace with your MQTT broker address
+MQTT_BROKER = "sewage.local"  # Replace with your MQTT broker address
 MQTT_PORT = 1883
 MQTT_TOPIC_DISTANCE = "sensor/distance"
 MQTT_TOPIC_LIMIT_SWITCH = "sensor/limit_switch"

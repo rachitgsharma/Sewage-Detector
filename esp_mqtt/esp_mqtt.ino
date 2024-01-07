@@ -1,14 +1,14 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid = "SSID";
-const char* password = "PASSWORD";
+const char* ssid = "S23";
+const char* password = "00000000";
 
-const char* mqttServer = "IP OF BROKER"; // Replace with your MQTT broker server address
+const char* mqttServer = "sewage.local"; // Replace with your MQTT broker server address
 const int mqttPort = 1883;
-const char* mqttUser = "mqttUser"; // Replace with your MQTT username
-const char* mqttPassword = "mqttPassword"; // Replace with your MQTT password
-const char* mqttClientId = "mqttClientId"; // Replace with a unique client ID
+const char* mqttUser = "sewage"; // Replace with your MQTT username
+const char* mqttPassword = "sewage"; // Replace with your MQTT password
+const char* mqttClientId = "Node_1"; // Replace with a unique client ID
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -78,9 +78,9 @@ void loop() {
   // Read the limit switch state
   int limitSwitchState = digitalRead(limitSwitchPin);
   if (limitSwitchState == 1) {
-    Serial.print("Lid close ");
-  } else {
     Serial.print("Lid open ");
+  } else {
+    Serial.print("Lid close ");
   }
 
   // Publish data via MQTT with specific topics
